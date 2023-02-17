@@ -1,0 +1,24 @@
+version: '3'
+services:
+  example_app:
+    build:
+      context: ./app/
+      dockerfile: ./Dockerfile
+      network: host
+    container_name: example_app
+    hostname: example_app
+    ports:
+      - 8000:8000
+
+  example_tester:
+    build:
+      context: ./test/
+      dockerfile: ./Dockerfile
+      network: host
+    container_name: example_tester
+    hostname: example_tester
+    volumes:
+      - ./test/src/log:/usr/src/app/src/log
+    environment:
+      TARGET_IP: example_app
+      TARGET_PORT: 8000
