@@ -1,0 +1,27 @@
+name: Docker Based Tests
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  build_and_test:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Build the container
+      run: docker-compose build
+    
+    - name: Put the application up
+      run: docker-compose up -d example_app
+      
+    - name: Wait that application properly loads
+      uses: jakejarvis/wait-action@master
+      with:
+        time: '5s'
+      
+    - name: Run the tests
+      run: docker-compose up example_tester
