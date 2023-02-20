@@ -24,4 +24,4 @@ jobs:
         time: '5s'
       
     - name: Run the tests
-      run: docker-compose up example_tester
+      run: docker-compose up --exit-code-from example_tester example_tester
